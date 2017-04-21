@@ -1,9 +1,3 @@
-//sets a global variable new clone to
-//clone one of the list items before anything
-//is done to them. it allows a user to completely
-//clear the list but still have something to clone on
-var newClone = $('li:first').clone()
-
 //toggles check class
 $('ul').on('click', '.shopping-item-toggle', function(event){
 		var $parentDiv = $(this).closest("div");
@@ -25,6 +19,7 @@ $('ul').on('click', '.shopping-item-delete', function(event){
 var newItem =function(){
 	$("#js-shopping-list-form").submit(function(event){
 		event.preventDefault();
+		var newClone = $('li:first').clone()
 		var newItem = newClone.children('.shopping-item')
 		.text( $("#shopping-list-entry").val());
 		newClone.children('.shopping-item').replaceWith(newItem);
