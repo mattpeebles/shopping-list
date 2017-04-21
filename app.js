@@ -1,43 +1,38 @@
-//Toggles items
-var itemToggle = function(){
-	$('.shopping-item-toggle').click(function(){
+//sets a global variable new clone to
+//clone one of the list items before anything
+//is done to them. it allows a user to completely
+//clear the list but still have something to clone on
+var newClone = $('li:first').clone()
+
+//toggles check class
+$('ul').on('click', '.shopping-item-toggle', function(event){
 		var $parentDiv = $(this).closest("div");
 		var $parentSpan = $($parentDiv).prev();
 		$parentSpan.toggleClass("shopping-item__checked")
-	})
-}
-
-//adding this line makes user double click for action
-//but ensures all new elements have the functionality
-$('ul').on('click', '.shopping-item-toggle', function(event){
-	itemToggle();
 })
 
 //Deletes items
-var itemDelete = function(){
-	$('.shopping-item-delete').click(function(){
-		var $parent = $(this).closest("li");
-		$parent.remove();
-	})
-}
-
-//same issue - requires double click
 $('ul').on('click', '.shopping-item-delete', function(event){
-	itemDelete();
+	var $parent = $(this).closest("li");
+	$parent.remove();
 })
 
 
-//copies the entire ul as it appears on screen. if there's
-//nothing on screen, nothing will appear when button is used
+//creates newItem which replaces the span text in the clone
+//with the new item. it then appends it to the end of the list.
+//finally it resets the input to clear it after the form has been
+//submitted
 var newItem =function(){
 	$("#js-shopping-list-form").submit(function(event){
 		event.preventDefault();
-		$("li").clone().appendTo(".shopping-list");
+		var newItem = newClone.children('.shopping-item')
+		.text( $("#shopping-list-entry").val());
+		newClone.children('.shopping-item').replaceWith(newItem);
+		newClone.appendTo(".shopping-list");
+		this.reset();
 	})
 }
 
 $(function (){
-	itemToggle();
-	itemDelete();
 	newItem();
 })
